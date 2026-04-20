@@ -122,7 +122,7 @@ import Top from './components/Top.vue';
 const lerp = (a, b, t) => a + (b - a) * t;
 
 // ─── Particle factory ────────────────────────────────────────────────────────
-const createParticles = (count = 22) => {
+const createParticles = (count = window.innerWidth < 768 ? 10 : 22) => {
   return Array.from({ length: count }, (_, i) => {
     const sin = Math.sin(i * 1234.5678 + 0.1);
     const cos = Math.cos(i * 4321.8765 + 0.1);
@@ -194,7 +194,7 @@ export default {
     const drawConnections = () => {
       if (!canvasCtx || !particleCanvas.value) return;
       const now = performance.now();
-      if (now - lastConnectFrame < 50) return; // ~20fps for lines (cheap)
+      if (now - lastConnectFrame < 64) return; // ~16fps for lines (cheap)
       lastConnectFrame = now;
 
       const canvas = particleCanvas.value;
@@ -293,11 +293,21 @@ export default {
       }
 
       AOS.init({
-        duration: 800,
-        once: false,
-        offset: 100,
-        easing: 'ease-in-out',
+        duration: 700,
+        once: true,
+        offset: 80,
+        easing: 'ease-out',
       });
+
+      // Pause RAF when tab is hidden to save CPU
+      const handleVisibility = () => {
+        if (document.hidden) {
+          if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        } else {
+          if (!rafId) tick();
+        }
+      };
+      document.addEventListener('visibilitychange', handleVisibility);
 
       tick();
 
@@ -306,6 +316,7 @@ export default {
 
     onUnmounted(() => {
       if (rafId) cancelAnimationFrame(rafId);
+      document.removeEventListener('visibilitychange', () => {});
     });
 
     return {
