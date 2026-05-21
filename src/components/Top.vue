@@ -17,6 +17,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { scrollToTop as smoothScrollToTop } from '../composables/useSmoothScroll';
 
 const isVisible = ref(false);
 
@@ -29,10 +30,7 @@ const handleScroll = () => {
 };
 
 const scrollToTop = () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    smoothScrollToTop();
 };
 
 onMounted(() => {

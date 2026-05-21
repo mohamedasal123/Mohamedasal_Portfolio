@@ -1,5 +1,5 @@
 <template>
-    <section class="py-24 sm:py-32 relative overflow-hidden bg-white dark:bg-[#020617]" id="services">
+    <section v-reveal class="py-24 sm:py-32 relative overflow-hidden bg-white dark:bg-[#020617]" id="services">
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div class="mb-20" data-aos="fade-up">
@@ -19,9 +19,9 @@
             <!-- Bento Box Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                 
-                <div v-for="(service, index) in services" :key="service.id" data-aos="fade-up" :data-aos-delay="index * 100"
+                <div v-for="(service, index) in services" :key="service.id" v-tilt="{ strength: 7 }" data-aos="fade-up" :data-aos-delay="index * 100"
                     :class="[
-                        'group relative p-8 sm:p-10 rounded-[2.5rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(59,130,246,0.3)]',
+                        'premium-card group relative p-8 sm:p-10 rounded-[2rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(59,130,246,0.3)]',
                         index === 0 || index === 3 ? 'lg:col-span-2' : 'lg:col-span-1',
                         'bg-slate-50 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 hover:border-blue-200 dark:hover:border-blue-800'
                     ]">

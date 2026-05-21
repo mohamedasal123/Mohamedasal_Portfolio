@@ -33,7 +33,12 @@
             <a
               :href="item.href"
               @click.prevent="scrollToSection(item.href)"
-              class="relative px-4 py-2 text-[13px] font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200 rounded-lg hover:bg-slate-100/80 dark:hover:bg-slate-800/60"
+              :class="[
+                'nav-link relative px-4 py-2 text-[13px] font-semibold transition-colors duration-200 rounded-lg',
+                activeSection === item.href
+                  ? 'text-blue-600 dark:text-blue-400 bg-blue-50/80 dark:bg-blue-500/10'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-slate-800/60'
+              ]"
             >
               {{ item.name }}
             </a>
@@ -112,7 +117,12 @@
               <a
                 :href="item.href"
                 @click.prevent="scrollToSection(item.href)"
-                class="flex items-center px-4 py-3.5 text-base font-semibold text-slate-700 dark:text-slate-300 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200"
+                :class="[
+                  'flex items-center px-4 py-3.5 text-base font-semibold rounded-xl transition-colors duration-200',
+                  activeSection === item.href
+                    ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400'
+                ]"
               >
                 {{ item.name }}
               </a>
@@ -139,6 +149,8 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useDark, useToggle } from '@vueuse/core';
 import { SunIcon, MoonIcon } from '@heroicons/vue/24/solid';
+import { useActiveSection } from '../composables/useActiveSection';
+import { smoothScrollTo } from '../composables/useSmoothScroll';
 
 const isDark = useDark({
   selector: 'html',
@@ -157,13 +169,22 @@ const Menu = ref([
 
 const isMenuOpen = ref(false);
 const isScrolled = ref(false);
+const { activeSection } = useActiveSection(['#hero', '#services', '#about', '#skills', '#projects', '#contact']);
+let ticking = false;
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 50;
+  if (ticking) return;
+
+  ticking = true;
+  requestAnimationFrame(() => {
+    isScrolled.value = window.scrollY > 50;
+    ticking = false;
+  });
 };
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+  window.addEventListener('scroll', handleScroll, { passive: true });
 });
 
 onUnmounted(() => {
@@ -172,16 +193,6 @@ onUnmounted(() => {
 
 const scrollToSection = (href) => {
   isMenuOpen.value = false;
-  const section = document.querySelector(href);
-  if (section) {
-    const headerOffset = 100;
-    const elementPosition = section.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: "smooth"
-    });
-  }
+  smoothScrollTo(href, 96);
 };
 </script>

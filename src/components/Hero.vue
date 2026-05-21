@@ -4,7 +4,7 @@
       <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
         
         <div class="flex flex-col justify-center order-2 lg:order-1 text-center lg:text-left">
-          <div class="text-slate-800 dark:text-white relative">
+          <div v-reveal class="text-slate-800 dark:text-white relative">
             <!-- Decorative tech accent -->
             <div class="hidden lg:block absolute -left-10 top-0 w-1 h-28 bg-linear-to-b from-blue-500 to-transparent opacity-50"></div>
 
@@ -58,15 +58,17 @@
           </div>
         </div>
 
-        <div class="flex justify-center items-center order-1 lg:order-2 mt-8 lg:mt-0 relative" data-aos="zoom-in" data-aos-delay="400">
+          <div v-reveal="{ delay: 160 }" class="flex justify-center items-center order-1 lg:order-2 mt-8 lg:mt-0 relative" data-aos="zoom-in" data-aos-delay="400">
           <!-- Animated Background Blobs behind Image focusing on a futuristic halo -->
           <div class="absolute w-[100%] h-[100%] bg-[conic-gradient(var(--tw-gradient-stops))] from-blue-400 via-cyan-300 to-blue-500 dark:from-blue-600 dark:via-cyan-500 dark:to-blue-600 rounded-full blur-3xl animate-[spin_10s_linear_infinite] opacity-30 dark:opacity-40 shadow-[0_0_100px_rgba(56,189,248,0.3)] pointer-events-none"></div>
           
           <!-- Glass frame to protect image without cropping -->
-          <div class="relative z-10 w-full max-w-[240px] sm:max-w-[300px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[440px] p-2 sm:p-4 rounded-[2rem] bg-white/20 dark:bg-slate-800/30 backdrop-blur-xl border border-white/60 dark:border-slate-700/60 shadow-2xl transition-all duration-700 hover:scale-[1.02]">
+          <div v-tilt="{ strength: 6 }" class="premium-card relative z-10 w-full max-w-[240px] sm:max-w-[300px] md:max-w-[360px] lg:max-w-[400px] xl:max-w-[440px] p-2 sm:p-4 rounded-[2rem] bg-white/20 dark:bg-slate-800/30 backdrop-blur-xl border border-white/60 dark:border-slate-700/60 shadow-2xl transition-all duration-700 hover:scale-[1.02]">
               <img 
                 src="/Portfolio.png" 
                 alt="Mohamed Developer" 
+                fetchpriority="high"
+                decoding="async"
                 class="w-full h-auto block rounded-2xl drop-shadow-2xl transition-transform duration-700 hover:scale-[1.03] bg-linear-to-tr from-blue-100/50 to-cyan-50/50 dark:from-slate-800/50 dark:to-slate-700/50"
               >
           </div>

@@ -1,5 +1,5 @@
 <template>
-    <section class="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" id="contact">
+    <section v-reveal class="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden" id="contact">
 
         <div class="max-w-3xl mx-auto text-center mb-16 relative z-10">
             <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-800 dark:text-white mb-6 tracking-tight" data-aos="fade-up">
@@ -12,7 +12,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto relative z-10">
             <!-- Contact Info -->
-            <div class="glass-card bg-white/60 dark:bg-slate-800/60 p-8 md:p-10 rounded-3xl border border-white/40 dark:border-white/10 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 h-full"
+            <div v-tilt="{ strength: 4 }" class="premium-card glass-card bg-white/60 dark:bg-slate-800/60 p-8 md:p-10 rounded-3xl border border-white/40 dark:border-white/10 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 h-full"
                 data-aos="fade-right">
                 <h3 class="text-3xl font-bold text-slate-800 dark:text-white mb-10">Contact Information</h3>
 
@@ -72,7 +72,7 @@
             </div>
 
             <!-- Contact Form -->
-            <div class="glass-card bg-white/60 dark:bg-slate-800/60 p-8 md:p-10 rounded-3xl border border-white/40 dark:border-white/10 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 relative" data-aos="fade-left">
+            <div v-tilt="{ strength: 4 }" class="premium-card glass-card bg-white/60 dark:bg-slate-800/60 p-8 md:p-10 rounded-3xl border border-white/40 dark:border-white/10 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 relative" data-aos="fade-left">
                 
                 <form ref="form" @submit.prevent="sendEmail" class="space-y-6">
 

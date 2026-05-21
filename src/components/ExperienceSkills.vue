@@ -1,5 +1,5 @@
 <template>
-    <section class="py-24 sm:py-32 relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/20" id="skills">
+    <section v-reveal class="py-24 sm:py-32 relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/20" id="skills">
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             
@@ -24,7 +24,7 @@
                     </h4>
 
                     <div class="space-y-10 mb-16">
-                        <div v-for="skill in skills" :key="skill.id" class="group">
+                        <div v-for="skill in skills" :key="skill.id" v-reveal="{ delay: skill.id * 70 }" class="group">
                             <div class="flex items-end justify-between mb-3">
                                 <span class="text-slate-900 dark:text-white font-semibold flex items-center gap-3 text-lg">
                                     <component :is="skill.icon" class="w-5 h-5 text-blue-500 dark:text-blue-400"></component>
@@ -172,4 +172,3 @@ const experience = ref([
 
 const techStack = ["HTML", "CSS3", "JAVASCRIPT", "JQUERY", "BOOTSTRAP", "TAILWIND CSS", "VUE JS", "MYSQL", "PHP", "LARAVEL", "GIT", "REST API", "AJAX"];
 </script>
-

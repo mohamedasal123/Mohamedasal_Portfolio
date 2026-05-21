@@ -88,7 +88,7 @@
       <div class="absolute inset-0 backdrop-blur-[60px] bg-white/45 dark:bg-[#020617]/72"></div>
     </div>
 
-    <div class="relative z-10 w-full">
+    <div class="app-shell relative z-10 w-full">
       <navbar />
       <hero />
       <services />
@@ -186,6 +186,7 @@ export default {
     let rafId = null;
     let canvasCtx = null;
     let lastConnectFrame = 0;
+    let handleVisibility = null;
 
     // ── Particles data ──────────────────────────────────────────────────────
     const particles = reactive(createParticles(22));
@@ -300,7 +301,7 @@ export default {
       });
 
       // Pause RAF when tab is hidden to save CPU
-      const handleVisibility = () => {
+      handleVisibility = () => {
         if (document.hidden) {
           if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
         } else {
@@ -316,7 +317,7 @@ export default {
 
     onUnmounted(() => {
       if (rafId) cancelAnimationFrame(rafId);
-      document.removeEventListener('visibilitychange', () => {});
+      if (handleVisibility) document.removeEventListener('visibilitychange', handleVisibility);
     });
 
     return {

@@ -1,5 +1,5 @@
 <template>
-    <section class="relative overflow-hidden py-24 sm:py-32 bg-slate-50/50 dark:bg-[#020617]/50" id="about">
+    <section v-reveal class="relative overflow-hidden py-24 sm:py-32 bg-slate-50/50 dark:bg-[#020617]/50" id="about">
         <!-- Background accents -->
         <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-400/5 dark:bg-blue-600/5 blur-[120px] rounded-full pointer-events-none"></div>
         <div class="absolute bottom-0 left-[-10%] w-[500px] h-[500px] bg-cyan-400/5 dark:bg-cyan-600/5 blur-[120px] rounded-full pointer-events-none"></div>
@@ -14,14 +14,14 @@
                     <div class="grid grid-cols-2 gap-4 sm:gap-6">
                         <!-- Column 1 (Pushed down for masonry effect) -->
                         <div class="flex flex-col gap-4 sm:gap-6 pt-12 sm:pt-16">
-                            <div class="rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 group relative">
-                                <img :src="images[0].src" :alt="images[0].alt" class="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105" />
+                            <div v-tilt="{ strength: 5 }" class="premium-card rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 group relative">
+                                <img :src="images[0].src" :alt="images[0].alt" loading="lazy" decoding="async" class="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105" />
                                 <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
                                     <span class="text-white text-xs font-bold uppercase tracking-widest">{{ images[0].tag }}</span>
                                 </div>
                             </div>
-                            <div class="rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 group relative">
-                                <img :src="images[1].src" :alt="images[1].alt" class="w-full aspect-square object-cover transition-transform duration-700 group-hover:scale-105" />
+                            <div v-tilt="{ strength: 5 }" class="premium-card rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 group relative">
+                                <img :src="images[1].src" :alt="images[1].alt" loading="lazy" decoding="async" class="w-full aspect-square object-cover transition-transform duration-700 group-hover:scale-105" />
                                 <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
                                     <span class="text-white text-xs font-bold uppercase tracking-widest">{{ images[1].tag }}</span>
                                 </div>
@@ -30,14 +30,14 @@
 
                         <!-- Column 2 (Starts at top) -->
                         <div class="flex flex-col gap-4 sm:gap-6">
-                            <div class="rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 group relative">
-                                <img :src="images[2].src" :alt="images[2].alt" class="w-full aspect-square object-cover transition-transform duration-700 group-hover:scale-105" />
+                            <div v-tilt="{ strength: 5 }" class="premium-card rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 group relative">
+                                <img :src="images[2].src" :alt="images[2].alt" loading="lazy" decoding="async" class="w-full aspect-square object-cover transition-transform duration-700 group-hover:scale-105" />
                                 <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
                                     <span class="text-white text-xs font-bold uppercase tracking-widest">{{ images[2].tag }}</span>
                                 </div>
                             </div>
-                            <div class="rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 group relative">
-                                <img :src="images[3].src" :alt="images[3].alt" class="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105" />
+                            <div v-tilt="{ strength: 5 }" class="premium-card rounded-3xl overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-black/50 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-800 group relative">
+                                <img :src="images[3].src" :alt="images[3].alt" loading="lazy" decoding="async" class="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-105" />
                                 <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
                                     <span class="text-white text-xs font-bold uppercase tracking-widest">{{ images[3].tag }}</span>
                                 </div>

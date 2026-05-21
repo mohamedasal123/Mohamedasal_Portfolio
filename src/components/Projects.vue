@@ -1,5 +1,5 @@
 <template>
-    <section class="py-24 sm:py-32 overflow-hidden relative bg-white dark:bg-[#020617]" id="projects">
+    <section v-reveal class="py-24 sm:py-32 overflow-hidden relative bg-white dark:bg-[#020617]" id="projects">
 
         <!-- Background accent -->
         <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-400/4 dark:bg-blue-600/4 blur-[120px] rounded-full pointer-events-none" aria-hidden="true"></div>
@@ -69,7 +69,7 @@
                     :key="project.id"
                 >
                     <!-- Card — fixed height via flex column + stretch -->
-                    <div class="project-card group">
+                    <div v-tilt="{ strength: 6 }" class="project-card premium-card group">
 
                         <!-- Image — fixed aspect ratio, no shrink -->
                         <div class="project-card__image">
