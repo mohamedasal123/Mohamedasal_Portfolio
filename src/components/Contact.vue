@@ -74,30 +74,30 @@
             <!-- Contact Form -->
             <div v-tilt="{ strength: 4 }" class="premium-card glass-card bg-white/60 dark:bg-slate-800/60 p-8 md:p-10 rounded-3xl border border-white/40 dark:border-white/10 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 relative" data-aos="fade-left">
                 
-                <form ref="form" @submit.prevent="sendEmail" class="space-y-6">
+                <form ref="form" @submit.prevent="sendEmail" v-stagger="{ step: 70, variant: 'fade-up' }" class="space-y-6">
 
-                    <div>
+                    <div data-stagger-item class="form-field">
                         <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Your Name</label>
                         <input type="text" name="user_name" required
-                            class="w-full px-5 py-4 rounded-xl bg-white/80 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all placeholder-slate-400 dark:placeholder-slate-500 shadow-inner"
+                            class="form-control w-full px-5 py-4 rounded-xl bg-white/80 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all placeholder-slate-400 dark:placeholder-slate-500 shadow-inner"
                             placeholder="John Doe">
                     </div>
 
-                    <div>
+                    <div data-stagger-item class="form-field">
                         <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Your Email</label>
                         <input type="email" name="user_email" required
-                            class="w-full px-5 py-4 rounded-xl bg-white/80 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all placeholder-slate-400 dark:placeholder-slate-500 shadow-inner"
+                            class="form-control w-full px-5 py-4 rounded-xl bg-white/80 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all placeholder-slate-400 dark:placeholder-slate-500 shadow-inner"
                             placeholder="john@example.com">
                     </div>
 
-                    <div>
+                    <div data-stagger-item class="form-field">
                         <label class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2">Message</label>
                         <textarea name="message" rows="4" required
-                            class="w-full px-5 py-4 rounded-xl bg-white/80 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all placeholder-slate-400 dark:placeholder-slate-500 resize-none shadow-inner"
+                            class="form-control w-full px-5 py-4 rounded-xl bg-white/80 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30 transition-all placeholder-slate-400 dark:placeholder-slate-500 resize-none shadow-inner"
                             placeholder="How can I help you?"></textarea>
                     </div>
 
-                    <button type="submit" :disabled="isLoading"
+                    <button data-stagger-item type="submit" :disabled="isLoading"
                         class="w-full py-4 px-6 rounded-xl bg-linear-to-r from-blue-600 to-cyan-500 dark:from-blue-500 dark:to-cyan-400 text-white font-extrabold hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/40 focus:ring-4 focus:ring-blue-500/30 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center gap-3">
                         <span v-if="!isLoading" class="text-lg tracking-wide">Send Message</span>
                         <span v-else class="flex items-center gap-3 text-lg tracking-wide">
@@ -155,3 +155,23 @@ const sendEmail = () => {
         });
 };
 </script>
+
+<style scoped>
+.form-field:focus-within label {
+    color: #2563eb;
+    transform: translateX(4px);
+}
+
+.form-field label {
+    transition: color 220ms ease, transform 220ms ease;
+}
+
+.form-control {
+    transition: border-color 220ms ease, box-shadow 220ms ease, transform 220ms ease, background-color 220ms ease;
+}
+
+.form-control:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(37, 99, 235, 0.12), inset 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+</style>

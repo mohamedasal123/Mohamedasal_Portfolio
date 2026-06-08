@@ -32,6 +32,7 @@
           <li v-for="item in Menu" :key="item.name">
             <a
               :href="item.href"
+              :aria-current="activeSection === item.href ? 'page' : undefined"
               @click.prevent="scrollToSection(item.href)"
               :class="[
                 'nav-link relative px-4 py-2 text-[13px] font-semibold transition-colors duration-200 rounded-lg',
@@ -50,6 +51,7 @@
       <div class="hidden md:flex items-center gap-3">
         <button
           @click="toggleDark()"
+          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
           class="relative w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-200"
         >
           <SunIcon v-if="isDark" class="w-4 h-4" />
@@ -69,6 +71,7 @@
       <div class="flex md:hidden items-center gap-2.5">
         <button
           @click="toggleDark()"
+          :aria-label="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
           class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400"
         >
           <SunIcon v-if="isDark" class="w-4 h-4" />
@@ -77,6 +80,8 @@
 
         <button
           @click="isMenuOpen = !isMenuOpen"
+          :aria-expanded="isMenuOpen"
+          aria-label="Toggle navigation menu"
           class="w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 relative"
         >
           <div class="w-[18px] h-[14px] relative">
@@ -116,6 +121,7 @@
             <li v-for="item in Menu" :key="item.name">
               <a
                 :href="item.href"
+                :aria-current="activeSection === item.href ? 'page' : undefined"
                 @click.prevent="scrollToSection(item.href)"
                 :class="[
                   'flex items-center px-4 py-3.5 text-base font-semibold rounded-xl transition-colors duration-200',

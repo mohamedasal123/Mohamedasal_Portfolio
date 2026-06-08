@@ -23,8 +23,8 @@
                         Technical Arsenal
                     </h4>
 
-                    <div class="space-y-10 mb-16">
-                        <div v-for="skill in skills" :key="skill.id" v-reveal="{ delay: skill.id * 70 }" class="group">
+                    <div v-stagger="{ step: 85, variant: 'slide-right' }" class="space-y-10 mb-16">
+                        <div v-for="skill in skills" :key="skill.id" data-stagger-item class="group">
                             <div class="flex items-end justify-between mb-3">
                                 <span class="text-slate-900 dark:text-white font-semibold flex items-center gap-3 text-lg">
                                     <component :is="skill.icon" class="w-5 h-5 text-blue-500 dark:text-blue-400"></component>
@@ -34,9 +34,9 @@
                             </div>
 
                             <div class="h-1.5 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-                                <div class="h-full rounded-full transition-all duration-1000 ease-out group-hover:brightness-110 relative overflow-hidden"
+                                <div v-progress="{ value: skill.percentage }" class="progress-fill h-full rounded-full group-hover:brightness-110 relative overflow-hidden"
                                     :class="[skill.gradient]" 
-                                    :style="{ width: skill.percentage + '%' }">
+                                    :style="{ '--progress-target': skill.percentage + '%' }">
                                     <div class="absolute inset-0 bg-white/30 w-full animate-[shimmer_2s_infinite] -translate-x-full"></div>
                                 </div>
                             </div>
@@ -49,8 +49,9 @@
                         <h4 class="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-6">
                            Core Stack
                         </h4>
-                        <div class="flex flex-wrap gap-2.5">
+                        <div v-stagger="{ step: 35, variant: 'scale' }" class="flex flex-wrap gap-2.5">
                             <span v-for="(tech, index) in techStack" :key="index" 
+                                  data-stagger-item
                                   class="px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium rounded-xl border border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-default shadow-sm">
                                 {{ tech }}
                             </span>
@@ -66,9 +67,9 @@
                         Professional Journey
                     </h4>
 
-                    <div class="relative border-l border-slate-200 dark:border-slate-800 ml-3 space-y-14 pb-4">
+                    <div v-stagger="{ step: 90, variant: 'slide-left' }" class="relative border-l border-slate-200 dark:border-slate-800 ml-3 space-y-14 pb-4">
                         
-                        <div v-for="exp in experience" :key="exp.id" class="relative pl-10 group">
+                        <div v-for="exp in experience" :key="exp.id" data-stagger-item class="relative pl-10 group">
                             <!-- Timeline dot -->
                             <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-blue-500 dark:bg-blue-400 ring-4 ring-slate-50 dark:ring-[#020617] group-hover:scale-150 group-hover:bg-blue-600 transition-all duration-300"></div>
                             

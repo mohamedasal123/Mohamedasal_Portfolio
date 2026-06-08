@@ -1,27 +1,37 @@
 <template>
-    <section v-reveal class="py-24 sm:py-32 overflow-hidden relative bg-white dark:bg-[#020617]" id="projects">
+    <section v-reveal class="py-24 sm:py-32 overflow-hidden relative" id="projects">
 
-        <!-- Background accent -->
-        <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-400/4 dark:bg-blue-600/4 blur-[120px] rounded-full pointer-events-none" aria-hidden="true"></div>
+        <!-- glass veil -->
+        <div class="absolute inset-0 bg-[#080b12]/55 backdrop-blur-[2px] pointer-events-none z-0"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- separator lines -->
+        <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none z-0"></div>
+        <div class="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none z-0"></div>
+
+        <!-- accent orb -->
+        <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/6 blur-[140px] rounded-full pointer-events-none z-0"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <!-- Header -->
             <div class="mb-16 md:mb-24" data-aos="fade-up">
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div>
-                        <p class="text-sm font-bold text-blue-600 dark:text-blue-400 tracking-widest uppercase mb-4">Portfolio</p>
-                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="h-px w-8 bg-blue-500/60"></span>
+                            <p class="text-xs font-bold text-blue-400 tracking-[0.2em] uppercase">Portfolio</p>
+                        </div>
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1]">
                             Featured <br class="hidden sm:block">
-                            <span class="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">Projects</span>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Projects</span>
                         </h2>
                     </div>
-                    <p class="text-slate-500 dark:text-slate-400 text-lg font-light max-w-sm leading-relaxed">
+                    <p class="text-slate-500 text-lg font-light max-w-sm leading-relaxed">
                         A curated selection of work spanning web development and graphic design.
                     </p>
                 </div>
 
-                <!-- Category Filter Tabs -->
+                <!-- Filter Tabs -->
                 <div class="flex flex-wrap gap-3 mt-12" data-aos="fade-up" data-aos-delay="100">
                     <button
                         v-for="tab in tabs"
@@ -30,12 +40,12 @@
                         :class="[
                             'px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300',
                             activeTab === tab.value
-                                ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg'
-                                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                                ? 'bg-white/10 border border-white/20 text-white shadow-lg backdrop-blur-sm'
+                                : 'bg-white/[0.04] border border-white/[0.08] text-slate-400 hover:bg-white/[0.07] hover:text-slate-200'
                         ]"
                     >
                         {{ tab.label }}
-                        <span :class="['ml-2 text-xs font-bold', activeTab === tab.value ? 'text-blue-400 dark:text-blue-500' : 'text-slate-400']">
+                        <span :class="['ml-2 text-xs font-bold', activeTab === tab.value ? 'text-blue-400' : 'text-slate-600']">
                             {{ tab.count }}
                         </span>
                     </button>
@@ -43,8 +53,8 @@
             </div>
         </div>
 
-        <!-- Swiper Slider -->
-        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-delay="150">
+        <!-- Swiper -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up" data-aos-delay="150">
 
             <Swiper
                 :modules="swiperModules"
@@ -64,14 +74,10 @@
                 watch-slides-progress
                 class="projects-swiper"
             >
-                <SwiperSlide
-                    v-for="(project, index) in filteredProjects"
-                    :key="project.id"
-                >
-                    <!-- Card — fixed height via flex column + stretch -->
-                    <div v-tilt="{ strength: 6 }" class="project-card premium-card group">
+                <SwiperSlide v-for="(project, index) in filteredProjects" :key="project.id">
+                    <div v-tilt="{ strength: 6 }" class="project-card group" :style="{ '--card-delay': `${index * 70}ms` }">
 
-                        <!-- Image — fixed aspect ratio, no shrink -->
+                        <!-- Image -->
                         <div class="project-card__image">
                             <img
                                 :src="project.img_src"
@@ -83,53 +89,63 @@
 
                             <!-- Hover Overlay -->
                             <div class="project-card__overlay">
-                                <a
-                                    v-if="project.link_code !== '#'"
-                                    :href="project.link_code"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="project-card__btn"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-                                    </svg>
-                                    View on GitHub
-                                </a>
-                                <span v-else class="project-card__btn project-card__btn--ghost">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.125 1.125 0 011.697 1.697l-2.758 4.138a25.335 25.335 0 002.63 7.19 4.5 4.5 0 00-5.053 4.293 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 00-4.764-4.648 1.125 1.125 0 01-1.697-1.697z" />
-                                    </svg>
-                                    Design Project
-                                </span>
+                                <div class="flex flex-col items-center gap-3">
+                                    <a
+                                        v-if="project.link_code && project.link_code !== '#'"
+                                        :href="project.link_code"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="project-card__btn"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                                        </svg>
+                                        GitHub
+                                    </a>
+                                    <a
+                                        v-if="project.link_live && project.link_live !== '#'"
+                                        :href="project.link_live"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="project-card__btn project-card__btn--live"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                        </svg>
+                                        Live Demo
+                                    </a>
+                                    <span v-if="project.link_code === '#'" class="project-card__btn project-card__btn--ghost">
+                                        Design Project
+                                    </span>
+                                </div>
                             </div>
 
-                            <!-- Category Badge -->
-                            <span :class="['project-card__badge', project.link_code !== '#' ? 'project-card__badge--dev' : 'project-card__badge--design']">
-                                {{ project.link_code !== '#' ? 'Dev' : 'Design' }}
+                            <!-- Badge -->
+                            <span :class="['project-card__badge', project.category === 'dev' ? 'project-card__badge--dev' : 'project-card__badge--design']">
+                                {{ project.category === 'dev' ? 'Dev' : 'Design' }}
                             </span>
                         </div>
 
-                        <!-- Card Body — grows to fill remaining height -->
+                        <!-- Body -->
                         <div class="project-card__body">
                             <div class="flex items-start gap-4 mb-3">
-                                <span class="text-[11px] font-black text-slate-300 dark:text-slate-700 mt-1.5 tabular-nums shrink-0">
+                                <span class="text-[11px] font-black text-white/20 mt-1.5 tabular-nums shrink-0">
                                     {{ String(index + 1).padStart(2, '0') }}
                                 </span>
-                                <h3 class="text-xl font-extrabold text-slate-900 dark:text-white leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
+                                <h3 class="text-xl font-extrabold text-white/90 leading-tight group-hover:text-blue-400 transition-colors duration-300">
                                     {{ project.title }}
                                 </h3>
                             </div>
 
-                            <p class="text-slate-500 dark:text-slate-400 text-sm font-light leading-relaxed line-clamp-2 pl-9 mb-6">
+                            <p class="text-slate-500 text-sm font-light leading-relaxed line-clamp-2 pl-9 mb-6">
                                 {{ project.decs }}
                             </p>
 
-                            <!-- Tags — always at bottom -->
                             <div class="mt-auto pl-9 flex flex-wrap gap-2">
                                 <span
                                     v-for="tag in project.tags"
                                     :key="tag"
-                                    class="text-[11px] font-semibold px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
+                                    class="text-[11px] font-semibold px-2.5 py-1 rounded-md bg-white/[0.06] border border-white/[0.08] text-slate-400"
                                 >
                                     {{ tag }}
                                 </span>
@@ -140,25 +156,18 @@
                 </SwiperSlide>
             </Swiper>
 
-            <!-- Navigation Buttons -->
-            <button
-                class="swiper-btn-prev"
-                aria-label="Previous project"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
+            <!-- Nav Buttons -->
+            <button class="swiper-btn-prev" aria-label="Previous project">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                 </svg>
             </button>
-            <button
-                class="swiper-btn-next"
-                aria-label="Next project"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4" aria-hidden="true">
+            <button class="swiper-btn-next" aria-label="Next project">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                 </svg>
             </button>
 
-            <!-- Pagination Dots -->
             <div class="swiper-custom-pagination mt-10 flex items-center justify-center gap-2"></div>
         </div>
 
@@ -173,100 +182,89 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 const swiperModules = [Navigation, Pagination, Autoplay];
-
 const activeTab = ref('all');
 
 const projects = ref([
+    // ── Dev projects (from CV) ──────────────────────────────────
     {
         id: 1,
-        img_src: 'p1.jpeg',
-        title: 'PHP E-Commerce',
-        decs: 'A full PHP-based e-commerce system with product management, secure cart features, and admin dashboard.',
-        alt: 'PHP e-commerce website project',
-        link_code: 'https://github.com/mohamedasal123/my_project_php',
-        tags: ['PHP', 'MySQL', 'Admin Panel'],
+        img_src: 'livenfactory.jpeg',
+        title: 'Liven Factory',
+        decs: 'Bilingual (AR/EN) full-stack furniture platform for a real client — 4+ dynamic modules including analytics dashboard and lead generation.',
+        alt: 'Liven Factory furniture platform',
+        link_code: 'https://github.com/mohamedasal123/livenfactory',
+        link_live: 'https://liven.lovestoblog.com/',
+        tags: ['Laravel 12', 'Vue 3', 'Pinia', 'Tailwind', 'MySQL', 'Sanctum'],
         category: 'dev',
     },
     {
         id: 2,
-        img_src: 'p2.jpeg',
-        title: 'Laravel CRUD System',
-        decs: 'A robust CRUD application built using Laravel 10 with clean MVC structure and validation.',
-        alt: 'Laravel CRUD application project',
-        link_code: 'https://github.com/mohamedasal123/CURDS_LARAVEL',
-        tags: ['Laravel', 'PHP', 'MVC'],
+        img_src: 'smartjob.jpeg',
+        title: 'Smart Job Portal',
+        decs: 'AI-powered recruitment platform with role-based access for 3 user types (Admin, Employer, Candidate) and Python/FastAPI smart CV matching.',
+        alt: 'Smart Job Portal AI recruitment platform',
+        link_code: 'https://github.com/mohamedasal123/Smart_job_portal_v2',
+        link_live: null,
+        tags: ['Laravel', 'React', 'Python', 'FastAPI', 'MySQL', 'REST API'],
         category: 'dev',
     },
     {
         id: 3,
-        img_src: 'p3.jpeg',
-        title: 'JavaScript CRUD (Edit Version)',
-        decs: 'A dynamic CRUD system created using pure JavaScript, featuring real-time DOM manipulation and inline editing.',
-        alt: 'JavaScript CRUD project with edit feature',
-        link_code: 'https://github.com/mohamedasal123/curds_edit_js',
-        tags: ['JavaScript', 'DOM', 'Vanilla JS'],
+        img_src: 'p1.jpeg',
+        title: 'PHP E-Commerce',
+        decs: 'Full e-commerce app in native PHP — product listing, cart system, checkout, session-based cart, and CRUD for products & categories.',
+        alt: 'PHP native e-commerce application',
+        link_code: 'https://github.com/mohamedasal123/e-commerce_php_native',
+        link_live: null,
+        tags: ['PHP', 'MySQL', 'HTML', 'CSS', 'JavaScript'],
         category: 'dev',
     },
     {
         id: 4,
-        img_src: 'p4.jpeg',
-        title: 'CRUD Application (JavaScript)',
-        decs: 'Basic CRUD operations demonstration using Vanilla JavaScript and local storage for data persistence.',
-        alt: 'Basic JavaScript CRUD application project',
-        link_code: 'https://github.com/mohamedasal123/curds_js',
-        tags: ['JavaScript', 'LocalStorage'],
+        img_src: 'laravel.png',
+        title: 'Laravel CRUD System',
+        decs: 'Full CRUD system using Laravel with clean MVC architecture, Blade templates, Eloquent ORM, and scalable project structure.',
+        alt: 'Laravel CRUD system',
+        link_code: 'https://github.com/mohamedasal123/CURDS_LARAVEL',
+        link_live: null,
+        tags: ['Laravel', 'PHP', 'Blade', 'MySQL', 'MVC'],
         category: 'dev',
     },
+
+    // ── Design projects (unchanged) ─────────────────────────────
     {
-        id: 5,
-        img_src: 'p5.jpeg',
-        title: 'Watches E-Commerce Frontend',
-        decs: 'A sleek, responsive frontend for an online watches store built with modern HTML5, CSS3, and JavaScript.',
-        alt: 'Online watches store project',
-        link_code: 'https://github.com/mohamedasal123/watchs_project',
-        tags: ['HTML', 'CSS3', 'JavaScript'],
-        category: 'dev',
+    id: 5,
+    img_src: 'mahmoud.png',
+    title: 'Mathematics Teacher Promotional Poster',
+    decs: 'A professional promotional poster designed for a mathematics teacher, featuring modern typography, a clean educational layout, and visual elements that highlight mathematical concepts and academic excellence.',
+    alt: 'Professional mathematics teacher poster design',
+    link_code: '#',
+    link_live: null,
+    tags: ['Educational Design', 'Poster Design', 'Mathematics'],
+    category: 'design',
     },
     {
-        id: 6,
-        img_src: 'p6.jpeg',
-        title: 'Vue.js E-Commerce App',
-        decs: 'A modern Single Page Application (SPA) built with Vue.js 3, Vue Router, and component-based architecture.',
-        alt: 'Vue.js e-commerce website project',
-        link_code: 'https://github.com/mohamedasal123/vue_project',
-        tags: ['Vue.js 3', 'SPA', 'Vue Router'],
-        category: 'dev',
-    },
-    {
-        id: 7,
-        img_src: 'mm1.png',
-        title: 'Futuristic Educational Poster',
-        decs: 'A futuristic promotional poster created for a mathematics instructor, using neon accents, clean composition, and bold Arabic typography.',
-        alt: 'Futuristic mathematics teacher poster design',
-        link_code: '#',
-        tags: ['Poster Design', 'Typography', 'Branding'],
-        category: 'design',
-    },
-    {
-        id: 8,
-        img_src: 'mm2.jpg',
-        title: 'Medical Advertisement Design',
-        decs: 'A clean and professional medical banner design featuring structured information layout, modern gradients, and business-style visual elements.',
-        alt: 'Professional medical advertisement banner',
-        link_code: '#',
-        tags: ['Banner', 'Medical', 'Layout'],
-        category: 'design',
-    },
-    {
-        id: 9,
-        img_src: 'we.jpg',
-        title: 'Product Mohamed Developer',
-        decs: 'A clean and modern product-themed graphic design created with bold typography, balanced composition, and professional visual elements.',
-        alt: 'Product packaging graphic design project',
-        link_code: '#',
-        tags: ['Product Design', 'Visual Identity'],
-        category: 'design',
-    },
+    id: 6,
+    img_src: 'dr mostafa.jpg',
+    title: 'Orthopedic Clinic Promotional Banner',
+    decs: 'A modern promotional banner for an orthopedic clinic, designed with a clean medical aesthetic, highlighting bone and joint care services with a professional healthcare-focused layout.',
+    alt: 'Orthopedic clinic promotional banner design',
+    link_code: '#',
+    link_live: null,
+    tags: ['Clinic Branding', 'Orthopedic', 'Medical Banner'],
+    category: 'design',
+},
+   {
+    id: 7,
+    img_src: 'logoliven.jpeg',
+    title: 'Modern Furniture Manufacturing Logo',
+    decs: 'A sleek and modern logo identity for a furniture manufacturing brand, designed to reflect strength, craftsmanship, and premium woodwork quality through minimal and geometric design elements.',
+    alt: 'Modern furniture manufacturing logo design',
+    link_code: '#',
+    link_live: null,
+    tags: ['Brand Identity', 'Logo Design', 'Furniture Industry'],
+    category: 'design',
+},
 ]);
 
 const tabs = computed(() => [
@@ -281,53 +279,35 @@ const filteredProjects = computed(() =>
         : projects.value.filter(p => p.category === activeTab.value)
 );
 
-const handleTabChange = (tabValue) => {
-    activeTab.value = tabValue;
-};
+const handleTabChange = (val) => { activeTab.value = val; };
 </script>
 
 <style scoped>
-/* ─── Swiper override: make slides stretch to equal height ─── */
-:deep(.projects-swiper) {
-    padding-bottom: 4px; /* avoid clipped shadows */
-}
+:deep(.projects-swiper) { padding-bottom: 4px; }
+:deep(.projects-swiper .swiper-wrapper) { align-items: stretch; }
+:deep(.projects-swiper .swiper-slide) { height: auto; display: flex; }
 
-:deep(.projects-swiper .swiper-wrapper) {
-    align-items: stretch;
-}
-
-:deep(.projects-swiper .swiper-slide) {
-    height: auto;
-    display: flex;
-}
-
-/* ─── Card shell ─── */
+/* Card */
 .project-card {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background: #ffffff;
-    border: 1px solid #f1f5f9;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
     border-radius: 2rem;
     overflow: hidden;
-    transition: background-color 0.3s ease;
-}
-
-.dark .project-card {
-    background: #020617;
-    border-color: #1e293b;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    animation: card-enter 620ms cubic-bezier(0.16,1,0.3,1) var(--card-delay,0ms) both;
+    backdrop-filter: blur(4px);
 }
 
 .project-card:hover {
-    background: rgba(239, 246, 255, 0.3);
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(96,165,250,0.2);
 }
 
-.dark .project-card:hover {
-    background: rgba(15, 23, 42, 0.8);
-}
-
-/* ─── Image block — fixed 16/10 ratio, never shrinks ─── */
+/* Image */
 .project-card__image {
     position: relative;
     overflow: hidden;
@@ -349,12 +329,12 @@ const handleTabChange = (tabValue) => {
     filter: brightness(1.05);
 }
 
-/* ─── Hover overlay ─── */
+/* Overlay */
 .project-card__overlay {
     position: absolute;
     inset: 0;
-    background: rgba(15, 23, 42, 0.70);
-    backdrop-filter: blur(2px);
+    background: rgba(8,11,18,0.80);
+    backdrop-filter: blur(3px);
     opacity: 0;
     transition: opacity 0.3s ease;
     display: flex;
@@ -362,66 +342,60 @@ const handleTabChange = (tabValue) => {
     justify-content: center;
 }
 
-.project-card:hover .project-card__overlay {
-    opacity: 1;
-}
+.project-card:hover .project-card__overlay { opacity: 1; }
 
 .project-card__btn {
     display: flex;
     align-items: center;
-    gap: 0.625rem;
+    gap: 0.5rem;
     background: #ffffff;
     color: #0f172a;
     font-weight: 700;
-    font-size: 0.875rem;
-    padding: 0.75rem 1.5rem;
+    font-size: 0.8rem;
+    padding: 0.6rem 1.25rem;
     border-radius: 9999px;
     text-decoration: none;
-    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
     transform: translateY(8px);
     transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-.project-card:hover .project-card__btn {
-    transform: translateY(0);
-}
+.project-card:hover .project-card__btn { transform: translateY(0); }
+.project-card__btn:hover { background: #2563eb; color: #fff; }
 
-.project-card__btn:hover {
-    background: #2563eb;
-    color: #ffffff;
+.project-card__btn--live {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
 }
+.project-card__btn--live:hover { background: #10b981; color: #fff; border-color: #10b981; }
 
 .project-card__btn--ghost {
-    background: rgba(255,255,255,0.2);
-    color: #ffffff;
-    backdrop-filter: blur(4px);
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.15);
     cursor: default;
 }
+.project-card__btn--ghost:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
-.project-card__btn--ghost:hover {
-    background: rgba(255,255,255,0.2);
-    color: #ffffff;
-}
-
-/* ─── Category badge ─── */
+/* Badge */
 .project-card__badge {
     position: absolute;
     top: 1rem;
     left: 1rem;
-    font-size: 0.625rem;
+    font-size: 0.6rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    padding: 0.375rem 0.75rem;
+    padding: 0.35rem 0.7rem;
     border-radius: 9999px;
     backdrop-filter: blur(8px);
-    color: #ffffff;
+    color: #fff;
 }
 
-.project-card__badge--dev    { background: rgba(37, 99, 235, 0.9); }
-.project-card__badge--design { background: rgba(124, 58, 237, 0.9); }
+.project-card__badge--dev    { background: rgba(37,99,235,0.85);  }
+.project-card__badge--design { background: rgba(124,58,237,0.85); }
 
-/* ─── Card body — fills remaining height, tags stay at bottom ─── */
+/* Body */
 .project-card__body {
     display: flex;
     flex-direction: column;
@@ -429,7 +403,7 @@ const handleTabChange = (tabValue) => {
     padding: 1.75rem 2rem;
 }
 
-/* ─── Navigation buttons ─── */
+/* Nav buttons */
 .swiper-btn-prev,
 .swiper-btn-next {
     position: absolute;
@@ -439,28 +413,21 @@ const handleTabChange = (tabValue) => {
     width: 2.75rem;
     height: 2.75rem;
     border-radius: 9999px;
-    border: 1px solid #e2e8f0;
-    background: #ffffff;
-    color: #475569;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: #94a3b8;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    backdrop-filter: blur(8px);
     cursor: pointer;
     transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-}
-
-.dark .swiper-btn-prev,
-.dark .swiper-btn-next {
-    background: #0f172a;
-    border-color: #334155;
-    color: #94a3b8;
 }
 
 .swiper-btn-prev:hover,
 .swiper-btn-next:hover {
     background: #2563eb;
-    color: #ffffff;
+    color: #fff;
     border-color: #2563eb;
 }
 
@@ -468,18 +435,13 @@ const handleTabChange = (tabValue) => {
 .swiper-btn-next { right: -1rem; }
 
 .swiper-btn-prev.swiper-button-disabled,
-.swiper-btn-next.swiper-button-disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    pointer-events: none;
-}
+.swiper-btn-next.swiper-button-disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 
-/* ─── Pagination dots ─── */
 :deep(.swiper-custom-pagination .swiper-pagination-bullet) {
     width: 8px;
     height: 8px;
     border-radius: 9999px;
-    background: #cbd5e1;
+    background: rgba(255,255,255,0.2);
     opacity: 1;
     transition: background 0.3s ease, width 0.3s ease;
     display: inline-block;
@@ -489,5 +451,10 @@ const handleTabChange = (tabValue) => {
 :deep(.swiper-custom-pagination .swiper-pagination-bullet-active) {
     background: #2563eb;
     width: 24px;
+}
+
+@keyframes card-enter {
+    from { opacity: 0; transform: translate3d(0,24px,0) scale(0.98); }
+    to   { opacity: 1; transform: translate3d(0,0,0) scale(1); }
 }
 </style>
