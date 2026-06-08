@@ -17,14 +17,13 @@
     >
 
       <!-- Logo -->
-      <a href="#hero" @click.prevent="scrollToSection('#hero')" class="flex items-center gap-2 group">
-        <div class="w-9 h-9 rounded-xl bg-linear-to-br from-blue-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow duration-300">
-          <span class="text-white text-sm font-black leading-none">M</span>
-        </div>
-        <span class="text-lg font-bold text-slate-900 dark:text-white tracking-tight hidden sm:block">
-          Mohamed<span class="text-blue-600 dark:text-blue-400">.</span>
-        </span>
-      </a>
+<a href="#hero" @click.prevent="scrollToSection('#hero')" class="flex items-center group">
+  <img 
+    src="/Portfolio.png" 
+    alt="Mohamed Asal" 
+    class="w-10 h-10 rounded-xl object-cover object-top shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow duration-300"
+  />
+</a>
 
       <!-- Desktop Nav -->
       <nav class="hidden md:flex items-center">

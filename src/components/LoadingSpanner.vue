@@ -3,8 +3,10 @@
         <div class="loader__mark" aria-hidden="true">
             <span class="loader__ring"></span>
             <span class="loader__ring loader__ring--delay"></span>
-            <span class="loader__core">M</span>
-            <span class="loader__node loader__node--one"></span>
+            <span class="loader__core">
+                <img src="/Portfolio.png" alt="Mohamed Asal"
+                    class="w-full h-full object-cover object-top rounded-[1.1rem]" />
+            </span> <span class="loader__node loader__node--one"></span>
             <span class="loader__node loader__node--two"></span>
             <span class="loader__node loader__node--three"></span>
         </div>
@@ -54,12 +56,11 @@
     width: 3.7rem;
     height: 3.7rem;
     border-radius: 1.2rem;
-    color: #ffffff;
-    font-weight: 900;
+    /* شيل color و font-weight وسيب الباقي */
     background: linear-gradient(135deg, #2563eb, #06b6d4);
     box-shadow: 0 24px 60px rgba(37, 99, 235, 0.28), 0 0 28px rgba(34, 211, 238, 0.28);
+    overflow: hidden; /* ← زود دي عشان الصورة ماتطلعش برا الـ border-radius */
 }
-
 .loader__node {
     position: absolute;
     width: 0.55rem;
@@ -140,6 +141,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .loader__ring,
     .loader__node,
     .loader__dots::after {

@@ -66,7 +66,7 @@
               <div class="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shine transition-all"></div>
             </a>
 
-            <a href="/Mohamedasal_Portfolio/MOHAMED_IBRAHIM_CV.pdf" download="Mohamed_Ibarhim_CV.pdf"
+            <a href="/mohamedasalcv.pdf" download="mohamedasalcv.pdf"
               class="relative group w-full sm:w-auto px-6 py-3.5 rounded-xl flex justify-center items-center overflow-hidden glass-card hover:-translate-y-1 transition-all duration-300 border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-500 bg-white/50 dark:bg-slate-800/50 hover:bg-white/80 dark:hover:bg-slate-700/80">
               <span class="text-slate-800 dark:text-white font-bold flex items-center text-base z-10">
                 Download CV
