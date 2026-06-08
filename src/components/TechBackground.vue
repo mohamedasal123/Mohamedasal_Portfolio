@@ -197,7 +197,8 @@ onUnmounted(() => {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background: #080b12;
+  background: var(--bg-color);
+  transition: background-color 0.5s ease;
 }
 
 .tech-canvas {
@@ -216,8 +217,8 @@ onUnmounted(() => {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(59, 130, 246, 0.09) 0%,
-    rgba(99, 102, 241, 0.05) 45%,
+    rgba(59, 130, 246, 0.06) 0%,
+    rgba(99, 102, 241, 0.03) 45%,
     transparent 70%
   );
   pointer-events: none;
@@ -225,10 +226,29 @@ onUnmounted(() => {
   will-change: transform;
 }
 
-/* subtle dark overlay so text stays readable */
+:global(.dark) .spotlight {
+  background: radial-gradient(
+    circle,
+    rgba(59, 130, 246, 0.09) 0%,
+    rgba(99, 102, 241, 0.05) 45%,
+    transparent 70%
+  );
+}
+
+/* subtle overlay so text stays readable */
 .veil {
   position: absolute;
   inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(248, 250, 252, 0.15) 0%,
+    rgba(248, 250, 252, 0.05) 50%,
+    rgba(248, 250, 252, 0.25) 100%
+  );
+  transition: background 0.5s ease;
+}
+
+:global(.dark) .veil {
   background: linear-gradient(
     to bottom,
     rgba(8, 11, 18, 0.15) 0%,

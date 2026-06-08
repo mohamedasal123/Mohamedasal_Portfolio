@@ -162,6 +162,7 @@ const isDark = useDark({
   attribute: 'class',
   valueDark: 'dark',
   valueLight: '',
+  initialValue: 'dark',
 });
 const toggleDark = useToggle(isDark);
 

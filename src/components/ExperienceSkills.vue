@@ -1,5 +1,5 @@
 <template>
-    <section v-reveal class="py-24 sm:py-32 relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/20" id="skills">
+    <section v-reveal class="py-24 sm:py-32 relative overflow-hidden bg-slate-50/50 dark:bg-slate-900/40" id="skills">
         
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             

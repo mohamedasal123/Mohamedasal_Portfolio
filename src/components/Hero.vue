@@ -1,5 +1,5 @@
 <template>
-  <section class="relative flex items-center w-full min-h-screen py-20 lg:py-0 overflow-hidden hero-section" id="hero">
+  <section class="relative flex items-center w-full min-h-screen py-20 lg:py-0 overflow-hidden hero-section dark:bg-slate-900/40" id="hero">
     <!-- Background decorative layers — z-index 0 (behind content) -->
     <div class="hero-glow" aria-hidden="true"></div>
     <div class="hero-orbit hero-orbit--one" aria-hidden="true"></div>

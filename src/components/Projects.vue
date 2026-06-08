@@ -2,11 +2,10 @@
     <section v-reveal class="py-24 sm:py-32 overflow-hidden relative" id="projects">
 
         <!-- glass veil -->
-        <div class="absolute inset-0 bg-[#080b12]/55 backdrop-blur-[2px] pointer-events-none z-0"></div>
-
+<div class="absolute inset-0 bg-slate-50/50 dark:bg-slate-900/40 backdrop-blur-[2px] pointer-events-none z-0"></div>
         <!-- separator lines -->
-        <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none z-0"></div>
-        <div class="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none z-0"></div>
+        <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-white/10 to-transparent pointer-events-none z-0"></div>
+        <div class="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-slate-200 dark:via-white/10 to-transparent pointer-events-none z-0"></div>
 
         <!-- accent orb -->
         <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/6 blur-[140px] rounded-full pointer-events-none z-0"></div>
@@ -19,14 +18,14 @@
                     <div>
                         <div class="flex items-center gap-3 mb-4">
                             <span class="h-px w-8 bg-blue-500/60"></span>
-                            <p class="text-xs font-bold text-blue-400 tracking-[0.2em] uppercase">Portfolio</p>
+                            <p class="text-xs font-bold text-blue-600 dark:text-blue-400 tracking-[0.2em] uppercase">Portfolio</p>
                         </div>
-                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.1]">
+                        <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1]">
                             Featured <br class="hidden sm:block">
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Projects</span>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">Projects</span>
                         </h2>
                     </div>
-                    <p class="text-slate-500 text-lg font-light max-w-sm leading-relaxed">
+                    <p class="text-slate-600 dark:text-slate-400 text-lg font-light max-w-sm leading-relaxed">
                         A curated selection of work spanning web development and graphic design.
                     </p>
                 </div>
@@ -38,14 +37,14 @@
                         :key="tab.value"
                         @click="handleTabChange(tab.value)"
                         :class="[
-                            'px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300',
+                            'px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 border',
                             activeTab === tab.value
-                                ? 'bg-white/10 border border-white/20 text-white shadow-lg backdrop-blur-sm'
-                                : 'bg-white/[0.04] border border-white/[0.08] text-slate-400 hover:bg-white/[0.07] hover:text-slate-200'
+                                ? 'bg-slate-950 dark:bg-white/10 border-slate-950 dark:border-white/20 text-white shadow-lg backdrop-blur-sm'
+                                : 'bg-slate-100 dark:bg-white/[0.04] border-slate-250/20 dark:border-white/[0.08] text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-white/[0.07] hover:text-slate-950 dark:hover:text-slate-200'
                         ]"
                     >
                         {{ tab.label }}
-                        <span :class="['ml-2 text-xs font-bold', activeTab === tab.value ? 'text-blue-400' : 'text-slate-600']">
+                        <span :class="['ml-2 text-xs font-bold', activeTab === tab.value ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 dark:text-slate-600']">
                             {{ tab.count }}
                         </span>
                     </button>
@@ -129,15 +128,15 @@
                         <!-- Body -->
                         <div class="project-card__body">
                             <div class="flex items-start gap-4 mb-3">
-                                <span class="text-[11px] font-black text-white/20 mt-1.5 tabular-nums shrink-0">
+                                <span class="text-[11px] font-black text-slate-400 dark:text-white/20 mt-1.5 tabular-nums shrink-0">
                                     {{ String(index + 1).padStart(2, '0') }}
                                 </span>
-                                <h3 class="text-xl font-extrabold text-white/90 leading-tight group-hover:text-blue-400 transition-colors duration-300">
+                                <h3 class="text-xl font-extrabold text-slate-900 dark:text-white/90 leading-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                                     {{ project.title }}
                                 </h3>
                             </div>
 
-                            <p class="text-slate-500 text-sm font-light leading-relaxed line-clamp-2 pl-9 mb-6">
+                            <p class="text-slate-500 dark:text-slate-400 text-sm font-light leading-relaxed line-clamp-2 pl-9 mb-6">
                                 {{ project.decs }}
                             </p>
 
@@ -145,7 +144,7 @@
                                 <span
                                     v-for="tag in project.tags"
                                     :key="tag"
-                                    class="text-[11px] font-semibold px-2.5 py-1 rounded-md bg-white/[0.06] border border-white/[0.08] text-slate-400"
+                                    class="text-[11px] font-semibold px-2.5 py-1 rounded-md bg-slate-100 dark:bg-white/[0.06] border border-slate-200 dark:border-white/[0.08] text-slate-600 dark:text-slate-400"
                                 >
                                     {{ tag }}
                                 </span>
@@ -293,8 +292,8 @@ const handleTabChange = (val) => { activeTab.value = val; };
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: var(--surface);
+    border: 1px solid var(--border-soft);
     border-radius: 2rem;
     overflow: hidden;
     transition: background 0.3s ease, border-color 0.3s ease;
@@ -303,8 +302,8 @@ const handleTabChange = (val) => { activeTab.value = val; };
 }
 
 .project-card:hover {
-    background: rgba(255,255,255,0.07);
-    border-color: rgba(96,165,250,0.2);
+    background: var(--surface-strong);
+    border-color: var(--primary);
 }
 
 /* Image */
@@ -413,9 +412,9 @@ const handleTabChange = (val) => { activeTab.value = val; };
     width: 2.75rem;
     height: 2.75rem;
     border-radius: 9999px;
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.06);
-    color: #94a3b8;
+    border: 1px solid var(--border-soft);
+    background: var(--surface);
+    color: var(--text-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -441,7 +440,7 @@ const handleTabChange = (val) => { activeTab.value = val; };
     width: 8px;
     height: 8px;
     border-radius: 9999px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(148, 163, 184, 0.4);
     opacity: 1;
     transition: background 0.3s ease, width 0.3s ease;
     display: inline-block;

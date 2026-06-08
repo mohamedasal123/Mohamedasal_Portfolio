@@ -73,6 +73,7 @@ useDark({
   attribute:  'class',
   valueDark:  'dark',
   valueLight: '',
+  initialValue: 'dark',
 })
 
 const loading        = ref(true)

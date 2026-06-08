@@ -214,10 +214,14 @@
     width: 720px;
     height: 720px;
     border-radius: 999px;
-    background: radial-gradient(circle, rgba(34, 211, 238, 0.16), rgba(37, 99, 235, 0.08) 34%, transparent 66%);
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.09), rgba(37, 99, 235, 0.04) 34%, transparent 66%);
     filter: blur(24px);
-    mix-blend-mode: screen;
     will-change: transform;
+  }
+
+  .dark .tech-background__spotlight {
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.16), rgba(37, 99, 235, 0.08) 34%, transparent 66%);
+    mix-blend-mode: screen;
   }
 
   .tech-background__veil {

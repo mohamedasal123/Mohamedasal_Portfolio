@@ -2,23 +2,22 @@
     <section v-reveal class="py-24 sm:py-32 relative overflow-hidden" id="services">
 
         <!-- section-level glass veil — lets the canvas show through -->
-        <div class="absolute inset-0 bg-[#080b12]/60 backdrop-blur-[2px] pointer-events-none z-0"></div>
-
+<div class="absolute inset-0 bg-slate-50/50 dark:bg-slate-900/40 backdrop-blur-[2px] pointer-events-none z-0"></div>
         <!-- subtle top-edge separator line -->
         <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent pointer-events-none z-0"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <div class="mb-20" data-aos="fade-up">
-                <h2 class="text-SM font-bold text-blue-400 tracking-widest uppercase mb-3">
+                <h2 class="text-sm font-bold text-blue-600 dark:text-blue-400 tracking-widest uppercase mb-3">
                     What I Do
                 </h2>
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                    <h3 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white tracking-tight max-w-2xl">
+                    <h3 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight max-w-2xl">
                         Elevating brands through
-                        <span class="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-cyan-400">digital solutions</span>.
+                        <span class="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-400">digital solutions</span>.
                     </h3>
-                    <p class="text-slate-400 text-lg md:text-xl max-w-md font-light">
+                    <p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl max-w-md font-light">
                         I build fast, modern, and responsive products with clean code and unparalleled user experience.
                     </p>
                 </div>
@@ -35,33 +34,33 @@
                     data-aos="fade-up"
                     :data-aos-delay="index * 100"
                     :class="[
-                        'service-card group relative p-8 sm:p-10 rounded-[2rem] overflow-hidden transition-all duration-500 hover:-translate-y-2',
+                        'service-card glass-card group relative p-8 sm:p-10 rounded-[2rem] overflow-hidden transition-all duration-500 hover:-translate-y-2',
                         index === 0 || index === 3 ? 'lg:col-span-2' : 'lg:col-span-1',
                     ]"
                 >
-                    <!-- glass card background -->
-                    <div class="absolute inset-0 rounded-[2rem] bg-white/[0.04] border border-white/[0.08] backdrop-blur-sm group-hover:bg-white/[0.07] group-hover:border-blue-500/25 transition-all duration-500 pointer-events-none"></div>
+                    <!-- hover border overlay/glow -->
+                    <div class="absolute inset-0 rounded-[2rem] border border-transparent group-hover:border-blue-500/25 transition-all duration-500 pointer-events-none"></div>
 
-                    <!-- hover glow -->
-                    <div class="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-blue-500/0 to-cyan-500/0 group-hover:from-blue-500/[0.06] group-hover:to-cyan-500/[0.04] transition-all duration-700 pointer-events-none"></div>
+                    <!-- hover glow background -->
+                    <div class="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-blue-500/0 to-cyan-500/0 group-hover:from-blue-500/[0.04] group-hover:to-cyan-500/[0.02] transition-all duration-700 pointer-events-none"></div>
 
                     <!-- ambient orb -->
                     <div class="absolute -right-16 -top-16 w-56 h-56 bg-blue-500/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
                     <div class="relative z-10 flex flex-col h-full">
                         <!-- icon box -->
-                        <div class="w-14 h-14 mb-10 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center group-hover:border-blue-500/40 group-hover:bg-blue-500/10 transition-all duration-500">
+                        <div class="w-14 h-14 mb-10 rounded-2xl bg-slate-100 dark:bg-white/[0.06] border border-slate-200 dark:border-white/10 flex items-center justify-center group-hover:border-blue-500/40 group-hover:bg-blue-500/10 transition-all duration-500">
                             <component
                                 :is="service.icon"
-                                class="w-7 h-7 text-slate-400 group-hover:text-blue-400 transition-colors duration-500"
+                                class="w-7 h-7 text-slate-500 dark:text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-500"
                             ></component>
                         </div>
 
                         <div class="mt-auto">
-                            <h4 class="text-2xl font-extrabold text-white/90 mb-4 group-hover:text-blue-300 transition-colors duration-300">
+                            <h4 class="text-2xl font-extrabold text-slate-900 dark:text-white/90 mb-4 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors duration-300">
                                 {{ service.name }}
                             </h4>
-                            <p class="text-slate-500 text-lg font-light leading-relaxed group-hover:text-slate-400 transition-colors duration-300">
+                            <p class="text-slate-500 dark:text-slate-400 text-lg font-light leading-relaxed transition-colors duration-300">
                                 {{ service.desc }}
                             </p>
                         </div>
