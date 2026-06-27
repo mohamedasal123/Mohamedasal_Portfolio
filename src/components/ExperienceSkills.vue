@@ -111,7 +111,7 @@ const skills = ref([
     id: 2,
     title: "Backend Development",
     icon: ServerIcon,
-    percentage: 70,
+    percentage: 100,
     gradient: "bg-linear-to-r from-blue-500 to-cyan-400",
     desc: "PHP, Laravel, MySQL, API Development"
   },
