@@ -41,6 +41,7 @@
       <navbar />
       <main>
         <hero />
+        <tech-marquee />
         <services />
         <about />
         <experience-skills />
@@ -57,6 +58,7 @@
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import { useDark } from '@vueuse/core'
 import Hero            from './components/Hero.vue'
+import TechMarquee     from './components/TechMarquee.vue'
 import Navbar          from './components/Navbar.vue'
 import Services        from './components/Services.vue'
 import About           from './components/About.vue'

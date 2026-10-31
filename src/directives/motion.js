@@ -144,6 +144,9 @@ export const tiltDirective = {
       el.style.setProperty('--tilt-y', '0deg');
       el.style.setProperty('--glare-x', '50%');
       el.style.setProperty('--glare-y', '50%');
+      el.style.setProperty('--shadow-x', '0px');
+      el.style.setProperty('--shadow-y', '0px');
+      el.style.setProperty('--tilt-active', '0');
     };
 
     const move = (event) => {
@@ -153,10 +156,17 @@ export const tiltDirective = {
 
       if (rafId) cancelAnimationFrame(rafId);
       rafId = requestAnimationFrame(() => {
-        el.style.setProperty('--tilt-x', `${(-y * strength).toFixed(2)}deg`);
-        el.style.setProperty('--tilt-y', `${(x * strength).toFixed(2)}deg`);
+        const tx = (-y * strength).toFixed(2);
+        const ty = (x * strength).toFixed(2);
+        el.style.setProperty('--tilt-x', `${tx}deg`);
+        el.style.setProperty('--tilt-y', `${ty}deg`);
         el.style.setProperty('--glare-x', `${((x + 0.5) * 100).toFixed(1)}%`);
         el.style.setProperty('--glare-y', `${((y + 0.5) * 100).toFixed(1)}%`);
+        // Dynamic shadow: shifts opposite to tilt for a depth illusion
+        el.style.setProperty('--shadow-x', `${(x * strength * 2.2).toFixed(2)}px`);
+        el.style.setProperty('--shadow-y', `${(y * strength * 2.2).toFixed(2)}px`);
+        // Scale slightly on hover activity
+        el.style.setProperty('--tilt-active', '1');
       });
     };
 
