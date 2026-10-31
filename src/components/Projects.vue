@@ -21,8 +21,11 @@
         </div>
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <h2 id="projects-heading" class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight max-w-2xl">
-            Featured
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-400 dark:from-blue-400 dark:via-cyan-400 dark:to-emerald-300">projects</span>.
+            <span class="line-mask block overflow-hidden">
+              <span class="line-inner block">
+                Featured <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-400 dark:from-blue-400 dark:via-cyan-400 dark:to-emerald-300">projects</span>.
+              </span>
+            </span>
           </h2>
           <p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl max-w-md font-light">
             Production platforms, backend systems, and brand design — shipped for real clients and real users.
@@ -398,15 +401,40 @@ const setTab = (value) => {
   box-shadow: 0 0 40px -10px rgba(6, 182, 212, 0.3), 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* Neon rim — subtle accent on the centred slide */
+/* Neon rim — revolving glowing laser beam on the active center card */
 .project-card__rim {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
   padding: 1.5px;
-  background: linear-gradient(140deg, rgba(34, 211, 238, 0.7), rgba(59, 130, 246, 0.1) 40%, rgba(16, 185, 129, 0.1) 60%, rgba(16, 185, 129, 0.7));
+  pointer-events: none;
+  overflow: hidden;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   opacity: 0;
   transition: opacity 500ms ease;
+  z-index: 10;
+}
+.project-card__rim::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  height: 250%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(59, 130, 246, 0.6) 320deg,
+    rgba(6, 182, 212, 1) 345deg,
+    rgba(16, 185, 129, 1) 360deg
+  );
+  animation: border-beam-spin 4s linear infinite;
+  will-change: transform;
 }
 :deep(.swiper-slide-active) .project-card__rim {
   opacity: 1;

@@ -27,11 +27,14 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <h3
             class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight max-w-2xl">
-            Building fast websites that
-            <span
-              class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-400 dark:from-blue-400 dark:via-cyan-400 dark:to-emerald-300">
-              grow your business
-            </span>.
+            <span class="line-mask block overflow-hidden">
+              <span class="line-inner block">Building fast websites that</span>
+            </span>
+            <span class="line-mask block overflow-hidden">
+              <span class="line-inner block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-400 dark:from-blue-400 dark:via-cyan-400 dark:to-emerald-300">
+                grow your business.
+              </span>
+            </span>
           </h3>
           <p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl max-w-md font-light">
             From custom web platforms to targeted ad campaigns, I help you reach more customers and increase your sales.
@@ -416,16 +419,46 @@ const handleGetStarted = () => {
     inset 0 1px 1px rgba(255, 255, 255, 0.12);
 }
 
-/* Dynamic border glow overlay */
+/* Glowing revolving border beam on active center / hovered card */
 .service-card__border {
-  border: 1.5px solid transparent;
-  transition: border-color 400ms ease, box-shadow 400ms ease;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 400ms ease;
+  z-index: 20;
+}
+
+.service-card__border::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  height: 250%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(59, 130, 246, 0.6) 320deg,
+    var(--card-accent, #06b6d4) 345deg,
+    #10b981 360deg
+  );
+  animation: border-beam-spin 4s linear infinite;
+  will-change: transform;
 }
 
 .service-coverflow-card:hover .service-card__border,
 :deep(.swiper-slide-active) .service-card__border {
-  border-color: var(--card-accent);
-  box-shadow: 0 0 25px -4px var(--card-glow);
+  opacity: 1;
 }
 
 /* Top glare reflection */

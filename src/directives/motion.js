@@ -4,34 +4,54 @@ const reduceMotion = () =>
 export const revealDirective = {
   mounted(el, binding) {
     const delay = Number(binding.value?.delay || 0);
-    const variant = binding.value?.variant || el.dataset.reveal || 'fade-up';
-    const distance = Number(binding.value?.distance || 28);
+    const variant = binding.value?.variant || el.dataset.reveal || 'spatial-pop';
+    const distance = Number(binding.value?.distance || 35);
 
     el.classList.add('motion-reveal');
     el.dataset.reveal = variant;
     el.style.setProperty('--reveal-delay', `${delay}ms`);
     el.style.setProperty('--reveal-distance', `${distance}px`);
 
+    // Detect grid containers: apply a 90ms staggered delay for child items
+    const isGrid = el.matches('.grid, [class*="grid"]');
+    const gridItems = isGrid
+      ? Array.from(el.children)
+      : Array.from(el.querySelectorAll(':scope > .grid > *, :scope > [class*="grid"] > *'));
+
+    if (gridItems.length > 0) {
+      gridItems.forEach((child, index) => {
+        child.classList.add('motion-reveal');
+        const childDelay = delay + index * 90;
+        child.style.setProperty('--reveal-delay', `${childDelay}ms`);
+      });
+    }
+
     if (reduceMotion()) {
       el.classList.add('is-visible');
+      gridItems.forEach((item) => item.classList.add('is-visible'));
       return;
     }
+
+    const setVisible = () => {
+      el.classList.add('is-visible');
+      if (gridItems.length > 0) {
+        gridItems.forEach((item) => item.classList.add('is-visible'));
+      }
+    };
 
     // Immediate viewport check: if the element is already substantially
     // visible when mounted (e.g. Hero section on page load), mark it visible
     // right away without waiting for IntersectionObserver async callback.
     const immediateRect = el.getBoundingClientRect();
     const inViewport =
-      immediateRect.top < window.innerHeight * 0.92 &&
-      immediateRect.bottom > window.innerHeight * 0.08;
+      immediateRect.top < window.innerHeight * 0.95 &&
+      immediateRect.bottom > window.innerHeight * 0.05;
 
     if (inViewport) {
-      // Use a very short rAF so the browser has painted the initial state
-      // (opacity:0) before we transition to visible, giving the CSS
-      // transition a chance to animate from 0→1.
+      // Use double rAF so the initial 3D transform is painted before transitioning
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          el.classList.add('is-visible');
+          setVisible();
         });
       });
       return;
@@ -40,14 +60,12 @@ export const revealDirective = {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        el.classList.add('is-visible');
+        setVisible();
         observer.disconnect();
       },
       {
-        // Slightly more forgiving margin so elements near the fold
-        // aren't clipped by the negative bottom margin.
         rootMargin: '0px 0px -8% 0px',
-        threshold: 0.12,
+        threshold: 0.1,
       },
     );
 
@@ -61,10 +79,10 @@ export const revealDirective = {
 
 export const staggerDirective = {
   mounted(el, binding) {
-    const selector = binding.value?.selector || '[data-stagger-item]';
+    const selector = binding.value?.selector || '[data-stagger-item], :scope > *';
     const baseDelay = Number(binding.value?.delay || 0);
-    const step = Number(binding.value?.step || 80);
-    const variant = binding.value?.variant || 'fade-up';
+    const step = Number(binding.value?.step || 90);
+    const variant = binding.value?.variant || 'spatial-pop';
     const items = [...el.querySelectorAll(selector)];
 
     items.forEach((item, index) => {
@@ -85,8 +103,8 @@ export const staggerDirective = {
         observer.disconnect();
       },
       {
-        rootMargin: '0px 0px -14% 0px',
-        threshold: 0.12,
+        rootMargin: '0px 0px -10% 0px',
+        threshold: 0.1,
       },
     );
 

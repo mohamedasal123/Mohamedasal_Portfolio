@@ -20,24 +20,34 @@
             <!-- Decorative tech accent -->
             <div class="hidden lg:block absolute -left-10 top-0 w-1 h-28 bg-linear-to-b from-blue-500 to-transparent opacity-50"></div>
 
-            <h1 class="hero-kicker font-bold text-sm sm:text-base md:text-lg text-slate-500 dark:text-slate-400 mb-3 tracking-widest uppercase" data-aos="fade-up">
-              Welcome to my universe
+            <h1 class="hero-kicker font-bold text-sm sm:text-base md:text-lg text-slate-500 dark:text-slate-400 mb-3 tracking-widest uppercase">
+              <span class="line-mask inline-block overflow-hidden">
+                <span class="line-inner inline-block">Welcome to my universe</span>
+              </span>
             </h1>
 
             <h2 class="hero-title font-extrabold leading-[1.08] tracking-tight relative"
                 aria-label="I'm Mohamed Ibrahim">
-              <span class="hero-im-text">I'm</span><br />
-              <span class="hero-name-gradient" aria-hidden="true">
-                <span
-                  v-for="(word, wIndex) in nameWords"
-                  :key="wIndex"
-                  class="hero-name-word"
-                ><span
-                    v-for="(char, cIndex) in word"
-                    :key="cIndex"
-                    class="hero-char"
-                    :style="{ '--char-delay': `${getCharDelay(wIndex, cIndex)}ms` }"
-                  >{{ char }}</span>{{ wIndex < nameWords.length - 1 ? '\u00A0' : '' }}</span>
+              <span class="line-mask block overflow-hidden">
+                <span class="line-inner block">
+                  <span class="hero-im-text">I'm</span>
+                </span>
+              </span>
+              <span class="line-mask block overflow-hidden">
+                <span class="line-inner block">
+                  <span class="hero-name-gradient" aria-hidden="true">
+                    <span
+                      v-for="(word, wIndex) in nameWords"
+                      :key="wIndex"
+                      class="hero-name-word"
+                    ><span
+                        v-for="(char, cIndex) in word"
+                        :key="cIndex"
+                        class="hero-char"
+                        :style="{ '--char-delay': `${getCharDelay(wIndex, cIndex)}ms` }"
+                      >{{ char }}</span>{{ wIndex < nameWords.length - 1 ? '\u00A0' : '' }}</span>
+                  </span>
+                </span>
               </span>
               <!-- Screen-reader accessible text -->
               <span class="sr-only">Mohamed Ibrahim</span>

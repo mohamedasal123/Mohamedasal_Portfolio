@@ -24,10 +24,14 @@
         </div>
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <h2 id="skills-heading" class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight max-w-2xl">
-            Battle-tested skills,
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-400 dark:from-blue-400 dark:via-cyan-400 dark:to-emerald-300">
-              real-world execution
-            </span>.
+            <span class="line-mask block overflow-hidden">
+              <span class="line-inner block">Battle-tested skills,</span>
+            </span>
+            <span class="line-mask block overflow-hidden">
+              <span class="line-inner block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-400 dark:from-blue-400 dark:via-cyan-400 dark:to-emerald-300">
+                real-world execution.
+              </span>
+            </span>
           </h2>
           <p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl max-w-md font-light">
             Scalable backend engineering, reactive interfaces, and revenue-focused growth systems backed by verified hands-on milestones.

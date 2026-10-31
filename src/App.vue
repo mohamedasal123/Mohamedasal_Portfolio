@@ -57,6 +57,8 @@
 <script setup>
 import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import { useDark } from '@vueuse/core'
+import Lenis from 'lenis'
+import 'lenis/dist/lenis.css'
 import Hero            from './components/Hero.vue'
 import TechMarquee     from './components/TechMarquee.vue'
 import Navbar          from './components/Navbar.vue'
@@ -84,7 +86,7 @@ const cursorEnabled  = ref(false)
 const cursor         = reactive({ x: 0, y: 0, active: false })
 const follower       = reactive({ x: 0, y: 0 })
 
-let rafId, followerRafId, loaderTimer
+let rafId, followerRafId, loaderTimer, lenis, lenisRafId
 
 const prefersReducedMotion = () =>
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
@@ -116,6 +118,27 @@ const handlePointerOver = (e) => {
 }
 
 onMounted(() => {
+  // Initialize Lenis smooth momentum scrolling
+  lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+    touchMultiplier: 1.5,
+  })
+
+  // Expose instance globally for composables
+  window.__lenis = lenis
+
+  // Setup requestAnimationFrame loop
+  function raf(time) {
+    lenis.raf(time)
+    lenisRafId = requestAnimationFrame(raf)
+  }
+  lenisRafId = requestAnimationFrame(raf)
+
+  // Keep scroll progress in sync with smooth scroll
+  lenis.on('scroll', updateScrollProgress)
+
   const fine = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches
   cursorEnabled.value = Boolean(fine && !prefersReducedMotion())
 
@@ -139,6 +162,12 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  if (lenisRafId)     cancelAnimationFrame(lenisRafId)
+  if (lenis) {
+    lenis.destroy()
+    window.__lenis = null
+    lenis = null
+  }
   if (rafId)          cancelAnimationFrame(rafId)
   if (followerRafId)  cancelAnimationFrame(followerRafId)
   if (loaderTimer)    clearTimeout(loaderTimer)

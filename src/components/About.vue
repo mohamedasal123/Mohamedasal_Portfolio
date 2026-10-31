@@ -22,8 +22,14 @@
         </div>
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <h2 id="about-heading" class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white tracking-tight max-w-2xl">
-            Code that ships,
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-400 dark:from-blue-400 dark:via-cyan-400 dark:to-emerald-300">campaigns that sell</span>.
+            <span class="line-mask block overflow-hidden">
+              <span class="line-inner block">Code that ships,</span>
+            </span>
+            <span class="line-mask block overflow-hidden">
+              <span class="line-inner block text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-emerald-400 dark:from-blue-400 dark:via-cyan-400 dark:to-emerald-300">
+                campaigns that sell.
+              </span>
+            </span>
           </h2>
           <p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl max-w-md font-light">
             Full-stack engineer building Laravel &amp; Vue platforms — and the high-ROAS ad funnels that bring them customers.
@@ -452,11 +458,37 @@ onUnmounted(() => {
 }
 
 .terminal-border {
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(34, 211, 238, 0.5), transparent 35%, transparent 65%, rgba(16, 185, 129, 0.45));
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  overflow: hidden;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
+  z-index: 10;
+}
+
+.terminal-border::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  height: 250%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(59, 130, 246, 0.6) 320deg,
+    rgba(34, 211, 238, 1) 345deg,
+    rgba(16, 185, 129, 1) 360deg
+  );
+  animation: border-beam-spin 4.5s linear infinite;
+  will-change: transform;
 }
 
 /* Code line entrance + hover highlight */
@@ -493,12 +525,38 @@ onUnmounted(() => {
 }
 
 .profile-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
   padding: 1.5px;
-  background: linear-gradient(140deg, rgba(34, 211, 238, 0.85), rgba(16, 185, 129, 0.2) 40%, rgba(59, 130, 246, 0.2) 60%, rgba(16, 185, 129, 0.85));
+  pointer-events: none;
+  overflow: hidden;
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
+  z-index: 10;
   filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.45));
+}
+
+.profile-border::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 250%;
+  height: 250%;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(59, 130, 246, 0.6) 320deg,
+    rgba(34, 211, 238, 1) 345deg,
+    rgba(16, 185, 129, 1) 360deg
+  );
+  animation: border-beam-spin 4.5s linear infinite;
+  will-change: transform;
 }
 
 /* Floating badges — elevated in Z and gently bobbing */
