@@ -1,11 +1,14 @@
 <template>
+  <!-- Cinematic Preloader -->
+  <cinematic-preloader v-if="showPreloader" @complete="onPreloaderComplete" />
+
   <transition name="loader-fade">
     <div v-if="loading" class="loader-screen">
       <loading-spanner />
     </div>
   </transition>
 
-  <div class="site-root min-h-screen text-slate-900 dark:text-slate-50">
+  <div v-show="!showPreloader" class="site-root min-h-screen text-slate-900 dark:text-slate-50">
 
     <!-- scroll indicator -->
     <div
@@ -59,6 +62,7 @@ import { onMounted, onUnmounted, reactive, ref } from 'vue'
 import { useDark } from '@vueuse/core'
 import Lenis from 'lenis'
 import 'lenis/dist/lenis.css'
+import CinematicPreloader from './components/CinematicPreloader.vue'
 import Hero            from './components/Hero.vue'
 import TechMarquee     from './components/TechMarquee.vue'
 import Navbar          from './components/Navbar.vue'
@@ -70,7 +74,7 @@ import Contact         from './components/Contact.vue'
 import End             from './components/End.vue'
 import LoadingSpanner  from './components/LoadingSpanner.vue'
 import Top             from './components/Top.vue'
-import TechBackground  from './components/TechBackground.vue'   // ← new
+import TechBackground  from './components/TechBackground.vue'
 
 useDark({
   selector:   'html',
@@ -80,6 +84,7 @@ useDark({
   initialValue: 'dark',
 })
 
+const showPreloader  = ref(true)
 const loading        = ref(true)
 const scrollProgress = ref(0)
 const cursorEnabled  = ref(false)
@@ -87,6 +92,12 @@ const cursor         = reactive({ x: 0, y: 0, active: false })
 const follower       = reactive({ x: 0, y: 0 })
 
 let rafId, followerRafId, loaderTimer, lenis, lenisRafId
+
+const onPreloaderComplete = () => {
+  showPreloader.value = false
+  // Unlock body scroll (preloader locks it)
+  document.body.style.overflow = ''
+}
 
 const prefersReducedMotion = () =>
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
