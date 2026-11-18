@@ -28,8 +28,15 @@ const canvasEl = ref(null)
 let ctx, W, H, raf
 let nodes = []
 let mouse = { x: -9999, y: -9999 }
+let isScrolling = false
+let scrollTimeout = null
+let isCanvasVisible = true
 
-const NODE_COUNT = () => Math.min(90, Math.floor((W * H) / 14000))
+const isMobile = () => window.innerWidth < 768
+const NODE_COUNT = () => {
+  const base = Math.min(90, Math.floor((W * H) / 14000))
+  return isMobile() ? Math.min(base, 40) : base  // Cap at 40 on mobile
+}
 const MAX_DIST    = 160
 const MOUSE_DIST  = 200
 const MOUSE_PULL  = 0.018   // how strongly nodes drift toward cursor
@@ -58,13 +65,30 @@ function initNodes() {
 
 /* ── resize ──────────────────────────── */
 function resize() {
-  W = canvasEl.value.width  = window.innerWidth
-  H = canvasEl.value.height = window.innerHeight
+  // Cap devicePixelRatio on mobile for performance
+  const dpr = isMobile() ? Math.min(window.devicePixelRatio || 1, 1.5) : window.devicePixelRatio || 1
+  const width = window.innerWidth
+  const height = window.innerHeight
+
+  canvasEl.value.width = width * dpr
+  canvasEl.value.height = height * dpr
+  canvasEl.value.style.width = `${width}px`
+  canvasEl.value.style.height = `${height}px`
+  ctx.scale(dpr, dpr)
+
+  W = width
+  H = height
   initNodes()
 }
 
 /* ── draw frame ──────────────────────── */
 function draw(ts) {
+  // Pause animation during active scroll or when canvas is out of viewport
+  if (isScrolling || !isCanvasVisible) {
+    raf = requestAnimationFrame(draw)
+    return
+  }
+
   ctx.clearRect(0, 0, W, H)
 
   /* update positions */
@@ -160,6 +184,22 @@ function draw(ts) {
   raf = requestAnimationFrame(draw)
 }
 
+/* ── scroll tracking ─────────────────── */
+function onScroll() {
+  isScrolling = true
+  if (scrollTimeout) clearTimeout(scrollTimeout)
+  scrollTimeout = setTimeout(() => {
+    isScrolling = false
+  }, 150)  // Resume animation 150ms after scroll stops
+}
+
+/* ── viewport visibility ─────────────── */
+function checkVisibility(entries) {
+  entries.forEach(entry => {
+    isCanvasVisible = entry.isIntersecting
+  })
+}
+
 /* ── pointer tracking ────────────────── */
 function onMove(e) {
   mouse.x = e.clientX
@@ -171,20 +211,37 @@ function onLeave() {
 }
 
 /* ── lifecycle ───────────────────────── */
+let visibilityObserver = null
+
 onMounted(() => {
   ctx = canvasEl.value.getContext('2d')
   resize()
+
   window.addEventListener('resize', resize, { passive: true })
+  window.addEventListener('scroll', onScroll, { passive: true })
+
   if (props.cursorEnabled) {
     window.addEventListener('pointermove', onMove, { passive: true })
     window.addEventListener('pointerleave', onLeave, { passive: true })
   }
+
+  // Use IntersectionObserver to pause canvas when out of viewport
+  visibilityObserver = new IntersectionObserver(checkVisibility, {
+    threshold: 0,
+    rootMargin: '50px'
+  })
+  visibilityObserver.observe(canvasEl.value)
+
   raf = requestAnimationFrame(draw)
 })
 
 onUnmounted(() => {
   cancelAnimationFrame(raf)
+  if (scrollTimeout) clearTimeout(scrollTimeout)
+  if (visibilityObserver) visibilityObserver.disconnect()
+
   window.removeEventListener('resize', resize)
+  window.removeEventListener('scroll', onScroll)
   window.removeEventListener('pointermove', onMove)
   window.removeEventListener('pointerleave', onLeave)
 })

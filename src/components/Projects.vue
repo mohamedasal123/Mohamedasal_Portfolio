@@ -65,7 +65,7 @@
           :loop="true"
           :speed="700"
           :coverflow-effect="{ rotate: 22, stretch: 0, depth: 200, modifier: 1.1, slideShadows: false }"
-          :autoplay="{ delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true }"
+          :autoplay="isMobile() ? false : { delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true }"
           class="projects-swiper"
           @swiper="onSwiper"
           @slide-change="onSlideChange"
@@ -88,8 +88,10 @@
                   <img
                     :src="project.image"
                     :alt="project.alt"
-                    loading="lazy"
+                    :loading="i === 0 ? 'eager' : 'lazy'"
                     decoding="async"
+                    width="800"
+                    height="500"
                     class="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                   />
                   <div class="project-card__glare absolute inset-0 pointer-events-none" aria-hidden="true"></div>
@@ -196,6 +198,8 @@ import 'swiper/css/pagination';
 
 // Navigation/Pagination are registered as requested; the UI uses custom controls bound to the instance.
 const swiperModules = [EffectCoverflow, Navigation, Pagination, Autoplay];
+
+const isMobile = () => window.innerWidth < 768;
 
 const categoryMeta = {
   fullstack: { label: 'Full-Stack & E-Commerce', short: 'Full-Stack', badge: 'bg-cyan-600/80' },
@@ -395,6 +399,14 @@ const setTab = (value) => {
   -webkit-backdrop-filter: blur(24px);
 }
 
+/* Mobile: reduce expensive blur */
+@media (max-width: 767px) {
+  .project-card {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
 /* Active center card glow in dark mode */
 :global(.dark) :deep(.swiper-slide-active .project-card) {
   border-color: rgba(6, 182, 212, 0.4) !important;
@@ -518,6 +530,13 @@ const setTab = (value) => {
   box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.3);
   cursor: pointer;
   transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), border-color 250ms ease, box-shadow 250ms ease;
+}
+
+@media (max-width: 767px) {
+  .nav-btn {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
 :global(.dark) .nav-btn {
   color: #f1f5f9;
