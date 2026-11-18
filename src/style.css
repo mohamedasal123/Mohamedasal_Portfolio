@@ -593,22 +593,22 @@
     backdrop-filter: blur(10px);
   }
 
-  /* Disable heavy 3D transforms on mobile */
-  .motion-reveal {
+  /* Disable heavy 3D transforms on mobile — EXCEPT inside Swiper containers */
+  .motion-reveal:not(.swiper-slide):not(.swiper *) {
     transform: translateY(20px);
     will-change: opacity, transform;
   }
 
-  .motion-reveal[data-reveal="slide-left"],
-  .motion-reveal[data-reveal="slide-right"] {
+  .motion-reveal[data-reveal="slide-left"]:not(.swiper-slide):not(.swiper *),
+  .motion-reveal[data-reveal="slide-right"]:not(.swiper-slide):not(.swiper *) {
     transform: translateX(0) translateY(20px);
   }
 
-  .motion-reveal[data-reveal="scale"] {
+  .motion-reveal[data-reveal="scale"]:not(.swiper-slide):not(.swiper *) {
     transform: translateY(20px) scale(0.95);
   }
 
-  .motion-reveal.is-visible {
+  .motion-reveal.is-visible:not(.swiper-slide):not(.swiper *) {
     transform: translateY(0) scale(1);
   }
 
@@ -620,6 +620,15 @@
   .dark .motion-tilt {
     box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
   }
+}
+
+/* Allow horizontal swipe in Swiper while keeping vertical scroll smooth */
+.swiper {
+  touch-action: pan-y;
+}
+
+.swiper-slide {
+  touch-action: auto;
 }
 
 @media (hover: none), (pointer: coarse) {
