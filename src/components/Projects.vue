@@ -53,7 +53,7 @@
     </div>
 
     <!-- ═══════════════ Coverflow ═══════════════ -->
-    <div class="relative z-10 max-w-[90rem] mx-auto px-2 sm:px-6">
+    <div class="relative z-20 max-w-[90rem] mx-auto px-2 sm:px-6">
       <Transition name="swap" mode="out-in">
         <Swiper
           :key="activeTab"
@@ -70,7 +70,7 @@
           @swiper="onSwiper"
           @slide-change="onSlideChange"
         >
-          <SwiperSlide v-for="(project, i) in slides" :key="`${project.id}-${i}`" class="project-slide opacity-60 hover:opacity-85 transition-all duration-300 [&.swiper-slide-active]:opacity-100">
+          <SwiperSlide v-for="(project, i) in slides" :key="`${project.id}-${i}`" class="project-slide">
             <article class="project-card group relative flex flex-col h-full rounded-3xl overflow-hidden bg-white/80 dark:bg-slate-900/85 backdrop-blur-2xl border border-slate-200/50 dark:border-slate-800 shadow-2xl transition-all duration-300 [.swiper-slide-active_&]:dark:border-cyan-500/40 [.swiper-slide-active_&]:dark:shadow-[0_0_40px_-10px_rgba(6,182,212,0.3)]">
               <div class="project-card__rim absolute inset-0 rounded-3xl pointer-events-none" aria-hidden="true"></div>
 
@@ -374,7 +374,7 @@ const setTab = (value) => {
   width: 86vw;
   max-width: 340px;
   height: auto;
-  opacity: 0.6;
+  opacity: 0.6 !important;
   filter: saturate(0.85);
   transition: opacity 300ms ease, filter 300ms ease;
 }
@@ -385,12 +385,13 @@ const setTab = (value) => {
   :deep(.projects-swiper .swiper-slide) { max-width: 500px; }
 }
 :deep(.projects-swiper .swiper-slide:hover) {
-  opacity: 0.85;
+  opacity: 0.85 !important;
   filter: saturate(1);
 }
 :deep(.projects-swiper .swiper-slide-active) {
   opacity: 1 !important;
   filter: none;
+  z-index: 20;
 }
 
 /* ───────────── Card ───────────── */
