@@ -118,28 +118,35 @@ const handlePointerOver = (e) => {
 }
 
 onMounted(() => {
-  // Initialize Lenis smooth momentum scrolling
-  lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smoothWheel: true,
-    touchMultiplier: 1.5,
-  })
-
-  // Expose instance globally for composables
-  window.__lenis = lenis
-
-  // Setup requestAnimationFrame loop
-  function raf(time) {
-    lenis.raf(time)
-    lenisRafId = requestAnimationFrame(raf)
-  }
-  lenisRafId = requestAnimationFrame(raf)
-
-  // Keep scroll progress in sync with smooth scroll
-  lenis.on('scroll', updateScrollProgress)
-
   const fine = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches
+  const isMobile = !fine || window.innerWidth < 768
+
+  // Only initialize Lenis on desktop/pointer devices — mobile uses native scroll
+  if (!isMobile && !prefersReducedMotion()) {
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+    })
+
+    // Expose instance globally for composables
+    window.__lenis = lenis
+
+    // Setup requestAnimationFrame loop
+    function raf(time) {
+      lenis.raf(time)
+      lenisRafId = requestAnimationFrame(raf)
+    }
+    lenisRafId = requestAnimationFrame(raf)
+
+    // Keep scroll progress in sync with smooth scroll
+    lenis.on('scroll', updateScrollProgress)
+  } else {
+    // Mobile: native scroll only
+    window.__lenis = null
+  }
+
   cursorEnabled.value = Boolean(fine && !prefersReducedMotion())
 
   cursor.x = follower.x = window.innerWidth  / 2

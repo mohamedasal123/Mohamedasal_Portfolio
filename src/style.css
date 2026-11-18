@@ -581,6 +581,47 @@
   }
 }
 
+/* ═══════════════ Mobile Performance Optimizations ═══════════════ */
+@media (max-width: 767px) {
+  /* Reduce expensive backdrop-filter blur values on mobile */
+  .glass-card {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .tech-background__veil {
+    backdrop-filter: blur(10px);
+  }
+
+  /* Disable heavy 3D transforms on mobile */
+  .motion-reveal {
+    transform: translateY(20px);
+    will-change: opacity, transform;
+  }
+
+  .motion-reveal[data-reveal="slide-left"],
+  .motion-reveal[data-reveal="slide-right"] {
+    transform: translateX(0) translateY(20px);
+  }
+
+  .motion-reveal[data-reveal="scale"] {
+    transform: translateY(20px) scale(0.95);
+  }
+
+  .motion-reveal.is-visible {
+    transform: translateY(0) scale(1);
+  }
+
+  /* Simplify shadows on mobile */
+  .motion-tilt {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .dark .motion-tilt {
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  }
+}
+
 @media (hover: none), (pointer: coarse) {
   .custom-cursor,
   .custom-cursor-follower {
