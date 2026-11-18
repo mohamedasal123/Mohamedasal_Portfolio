@@ -65,7 +65,7 @@
           :loop="true"
           :speed="700"
           :coverflow-effect="{ rotate: 22, stretch: 0, depth: 200, modifier: 1.1, slideShadows: false }"
-          :autoplay="isMobile() ? false : { delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true }"
+          :autoplay="{ delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true }"
           class="projects-swiper"
           @swiper="onSwiper"
           @slide-change="onSlideChange"
