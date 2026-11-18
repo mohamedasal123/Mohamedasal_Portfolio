@@ -43,7 +43,7 @@
       </div>
 
       <!-- 3D Coverflow Swiper Carousel -->
-      <div class="relative px-2 sm:px-6">
+      <div class="relative px-2 sm:px-6 z-20">
 
         <Swiper :modules="swiperModules" effect="coverflow" :grab-cursor="true" :centered-slides="true"
           slides-per-view="auto" :loop="true" :coverflow-effect="{
@@ -373,7 +373,7 @@ const handleGetStarted = () => {
   width: 320px;
   max-width: 86vw;
   transition: opacity 350ms cubic-bezier(0.16, 1, 0.3, 1), filter 350ms ease;
-  opacity: 0.45;
+  opacity: 0.5 !important;
   filter: blur(1.5px);
 }
 
@@ -390,7 +390,7 @@ const handleGetStarted = () => {
 }
 
 :deep(.services-swiper .swiper-slide-active) {
-  opacity: 1;
+  opacity: 1 !important;
   filter: blur(0);
   z-index: 20;
 }
